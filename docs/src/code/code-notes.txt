@@ -736,6 +736,12 @@ nml message numbers: from emc.hh:
 // even before emccanon issues the move to toolchange position +
 #define EMC_TOOL_START_CHANGE_TYPE                   ((NMLTYPE) 1110) +
 
+== Motion
+Motion is a realtime component that reads a queued list of commands +
+send from Task, runs them through a trajectory planner and does kinematics conversion. +
+The results are sent out to the real world as information on HAL pins. +
+Status and feedback is returned to task through shared memory messages. +
+
 == User Interfaces
 
  +
@@ -1412,7 +1418,11 @@ emcioStatus.tool.toolTable[]::
 
 
 ==== interp
+Task calls the interpreter to convert a Gcode text file, to motion commands for the motion controller. +
+interp_executes calls interp_read to read a line (block) of gcode. +
+The block is then 'converted' (interp_read) into the settings structure. +
 
+The path to the interpreter is src/emc/rs274ngc +
 +settings+ is of type +settings+, which is +struct setup_struct+.
 Defined in +src/emc/rs274ngc/interp_internal.hh+.
 
