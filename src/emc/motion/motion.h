@@ -731,6 +731,7 @@ Suggestion: Split this in to an Error and a Status flag register..
 	EmcPose dtg;
 	double current_vel;
 	double requested_vel;
+	double base_feedrate; /*F feed rate*/
 
 	unsigned int tcqlen;
 	EmcPose tool_offset;

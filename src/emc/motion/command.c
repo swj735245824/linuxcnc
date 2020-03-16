@@ -1931,6 +1931,7 @@ void emcmotCommandHandler(void *arg, long period)
         case EMCMOT_FEED_RATE:
 	    rtapi_print( "SET_FEEDRATE: %f\n", emcmotCommand->feedrate);
 	    rtapi_print_msg(RTAPI_MSG_DBG, " %f", emcmotCommand->feedrate);
+        emcmotStatus->base_feedrate = emcmotCommand-> feedrate;
 	    break;
 
 	default:
