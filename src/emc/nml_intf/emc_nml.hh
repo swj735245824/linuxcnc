@@ -992,6 +992,18 @@ class EMC_TRAJ_PROBE:public EMC_TRAJ_CMD_MSG {
     unsigned char probe_type;
 };
 
+class EMC_TRAJ_SET_FEEDRATE:public EMC_TRAJ_CMD_MSG {
+  public:
+    EMC_TRAJ_SET_FEEDRATE():EMC_TRAJ_CMD_MSG(EMC_TRAJ_SET_FEEDRATE_TYPE,
+				      sizeof(EMC_TRAJ_SET_FEEDRATE)) {
+    };
+
+    // For internal NML/CMS use only.
+    void update(CMS * cms);
+
+    double feedrate;
+};
+
 class EMC_TRAJ_RIGID_TAP:public EMC_TRAJ_CMD_MSG {
   public:
     EMC_TRAJ_RIGID_TAP():EMC_TRAJ_CMD_MSG(EMC_TRAJ_RIGID_TAP_TYPE,

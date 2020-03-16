@@ -1473,6 +1473,10 @@ int emcTrajRigidTap(EmcPose pos, double vel, double ini_maxvel, double acc, doub
     return usrmotWriteEmcmotCommand(&emcmotCommand);
 }
 
+int emcTrajSetFeedrate(double feedrate)
+{
+return 0;
+}
 
 static int last_id = 0;
 static int last_id_printed = 0;

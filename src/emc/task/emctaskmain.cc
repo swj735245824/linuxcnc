@@ -832,6 +832,7 @@ static int emcTaskPlan(void)
 	    case EMC_TRAJ_RIGID_TAP_TYPE:
 	    case EMC_TRAJ_SET_TELEOP_ENABLE_TYPE:
 	    case EMC_SET_DEBUG_TYPE:
+	    case EMC_TRAJ_SET_FEEDRATE_TYPE:
 		retval = emcTaskIssueCommand(emcCommand);
 		break;
 
@@ -1494,6 +1495,7 @@ static int emcTaskCheckPreconditions(NMLmsg * cmd)
     case EMC_TRAJ_CLEAR_PROBE_TRIPPED_FLAG_TYPE:	// and this
     case EMC_AUX_INPUT_WAIT_TYPE:
     case EMC_SPINDLE_WAIT_ORIENT_COMPLETE_TYPE:
+	case EMC_TRAJ_SET_FEEDRATE_TYPE:
 	return EMC_TASK_EXEC_WAITING_FOR_MOTION_AND_IO;
 	break;
 
@@ -2356,6 +2358,10 @@ static int emcTaskIssueCommand(NMLmsg * cmd)
 	retval =  emcIoPluginCall( (EMC_IO_PLUGIN_CALL *) cmd);
 	break;
 
+    case EMC_TRAJ_SET_FEEDRATE_TYPE:
+	retval = emcTrajSetFeedrate(((EMC_TRAJ_SET_FEEDRATE *) cmd) ->feedrate);
+	break;
+
      default:
 	// unrecognized command
 	if (emc_debug & EMC_DEBUG_TASK_ISSUE) {
@@ -2422,6 +2428,8 @@ static int emcTaskCheckPostconditions(NMLmsg * cmd)
     case EMC_TRAJ_SET_FO_ENABLE_TYPE:
     case EMC_TRAJ_SET_FH_ENABLE_TYPE:
     case EMC_TRAJ_SET_SO_ENABLE_TYPE:
+    case EMC_TRAJ_SET_FEEDRATE_TYPE:
+	break;
 	return EMC_TASK_EXEC_DONE;
 	break;
 

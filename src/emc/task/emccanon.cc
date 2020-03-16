@@ -408,6 +408,13 @@ static double toExtVel(double vel) {
 
 static double toExtAcc(double acc) { return toExtVel(acc); }
 
+static void send_feedrate_msg(double rate) {
+    flush_segments();
+    EMC_TRAJ_SET_FEEDRATE feedrateMsg;
+    feedrateMsg.feedrate = rate;
+    interp_list.append(feedrateMsg);
+}
+
 static void send_g5x_msg(int index) {
     flush_segments();
 
@@ -518,6 +525,8 @@ void SET_FEED_RATE(double rate)
 
 	canon.linearFeedRate = newLinearFeedRate;
 	canon.angularFeedRate = newAngularFeedRate;
+    // send a feedrate NML message with the F word setting
+    send_feedrate_msg(rate*60);
     }
 }
 
