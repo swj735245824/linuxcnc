@@ -1928,6 +1928,11 @@ void emcmotCommandHandler(void *arg, long period)
 	    axis->locking_joint = joint_num;
             break;
 
+        case EMCMOT_FEED_RATE:
+	    rtapi_print( "SET_FEEDRATE: %f\n", emcmotCommand->feedrate);
+	    rtapi_print_msg(RTAPI_MSG_DBG, " %f", emcmotCommand->feedrate);
+	    break;
+
 	default:
 	    rtapi_print_msg(RTAPI_MSG_DBG, "UNKNOWN");
 	    reportError(_("unrecognized command %d"), emcmotCommand->command);
