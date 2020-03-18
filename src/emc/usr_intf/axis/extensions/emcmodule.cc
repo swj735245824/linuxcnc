@@ -357,6 +357,7 @@ static PyMemberDef Stat_members[] = {
         "currently taking place."},
     {(char*)"distance_to_go", T_DOUBLE, O(motion.traj.distance_to_go), READONLY},
     {(char*)"current_vel", T_DOUBLE, O(motion.traj.current_vel), READONLY},
+    {(char*)"current_fcode", T_DOUBLE, O(motion.base_feedrate), READONLY},
     {(char*)"feed_override_enabled", T_BOOL, O(motion.traj.feed_override_enabled), READONLY},
     {(char*)"adaptive_feed_enabled", T_BOOL, O(motion.traj.adaptive_feed_enabled), READONLY},
     {(char*)"feed_hold_enabled", T_BOOL, O(motion.traj.feed_hold_enabled), READONLY},

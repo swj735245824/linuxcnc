@@ -2589,6 +2589,7 @@ void EMC_MOTION_STAT::update(CMS * cms)
     for (int i_joint = 0; i_joint < EMCMOT_MAX_JOINTS; i_joint++)
 	joint[i_joint].update(cms);
     cms->update(debug);
+    cms->update(base_feedrate);
 
     // spindle.update(cms); //FIXME - is this needed ? Let's see. andypugh 13/6/16
 

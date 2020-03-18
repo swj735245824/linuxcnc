@@ -431,6 +431,7 @@ BOOST_PYTHON_MODULE(emctask) {
 	.add_property( "analog_output",
 		       bp::make_function( analog_io_w(&analog_output_wrapper),
 					  bp::with_custodian_and_ward_postcall< 0, 1 >()))
+	.def_readonly("base_feedrate", &EMC_MOTION_STAT::base_feedrate)
 	;
 
 

@@ -154,6 +154,7 @@ class _GStat(gobject.GObject):
 
         'm-code-changed': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
         'g-code-changed': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+        'f-code-changed': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_FLOAT,)),
 
         'metric-mode-changed': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),
         'user-system-changed': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
@@ -331,6 +332,7 @@ class _GStat(gobject.GObject):
             #active_mcodes.append("M%s "%i)
         self.old['m-code'] = mcodes
         self.old['tool-info']  = self.stat.tool_table[0]
+        self.old['current_fcode']  = self.stat.current_fcode
 
     def update(self):
         try:
@@ -604,6 +606,11 @@ class _GStat(gobject.GObject):
         tool_info_new = self.old['tool-info']
         if tool_info_new != tool_info_old:
             self.emit('tool-info-changed', tool_info_new)
+        # current F code
+        fcode_old = old.get('current_fcode', None)
+        fcode_new = self.old['current_fcode']
+        if fcode_new != fcode_old:
+            self.emit('f-code-changed', fcode_new)
 
         # AND DONE... Return true to continue timeout
         self.emit('periodic')
@@ -711,6 +718,7 @@ class _GStat(gobject.GObject):
         self.emit('jogincrement-angular-changed', self.current_jog_distance_angular, self.current_jog_distance_angular_text)
         tool_info_new = self.old['tool-info']
         self.emit('tool-info-changed', tool_info_new)
+        self.emit('f-code-changed', 0)
 
         # update external ojects
         self.emit('forced-update')

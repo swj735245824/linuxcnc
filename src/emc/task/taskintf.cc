@@ -1963,6 +1963,7 @@ int emcMotionUpdate(EMC_MOTION_STAT * stat)
     for (aio = 0; aio < EMCMOT_MAX_AIO; aio++) {
 	stat->analog_input[aio] = emcmotStatus.analog_input[aio];
 	stat->analog_output[aio] = emcmotStatus.analog_output[aio];
+	stat->base_feedrate = emcmotStatus.base_feedrate;
     }
 
     // set the status flag

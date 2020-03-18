@@ -1233,6 +1233,7 @@ class EMC_MOTION_STAT:public EMC_MOTION_STAT_MSG {
     int debug;			// copy of EMC_DEBUG global
     int on_soft_limit;
     int external_offsets_applied;
+    double base_feedrate;
     EmcPose eoffset_pose;
 };
 
