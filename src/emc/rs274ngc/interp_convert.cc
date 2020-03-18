@@ -2698,32 +2698,6 @@ int Interp::convert_length_units(int g_code,     //!< g_code being executed (mus
 }
 
 
-/*
- * given two double arrays representing interpreter settings as stored in
- * _setup.active_settings, construct a G-code sequence to synchronize their state.
- */
-int Interp::gen_settings(double *current, double *saved, std::string &cmd)
-{
-    int i;
-    char buf[LINELEN];
-    for (i = 0; i < ACTIVE_SETTINGS; i++) {
-	if (saved[i] != current[i]) {
-	    switch (i) {
-	    case 0: break; // sequence_number - no point in restoring
-	    case 1:
-		snprintf(buf,sizeof(buf)," F%.1f", saved[i]);
-                cmd += buf;
-		break;
-	    case 2:
-		snprintf(buf,sizeof(buf)," S%.0f", saved[i]);
-                cmd += buf;
-		break;
-	    }
-	}
-    }
-    return INTERP_OK;
-}
-
 
 /*
  * given two int arrays representing interpreter settings as stored in
@@ -2885,7 +2859,7 @@ int Interp::restore_settings(setup_pointer settings,
 	snprintf(buf,sizeof(buf), "G%d",settings->sub_context[from_level].saved_g_codes[5]/10);
 	CHKS(execute(buf) != INTERP_OK, _("M7x: restore_settings G20/G21 failed: '%s'"), cmd.c_str());
     }
-    gen_settings((double *)settings->active_settings, (double *)settings->sub_context[from_level].saved_settings,cmd);
+
     gen_m_codes((int *) settings->active_m_codes, (int *)settings->sub_context[from_level].saved_m_codes,cmd);
     gen_g_codes((int *)settings->active_g_codes, (int *)settings->sub_context[from_level].saved_g_codes,cmd);
 
